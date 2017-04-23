@@ -3,14 +3,16 @@ from random import randint
 
 import matplotlib.pyplot as pyplot
 
-def rollTwoDice():
-	return randint(1,6) + randint(1,6)
 
 def plot(x,y):
 	pyplot.bar(x,y)
 	pyplot.show()
 
 
+nDado1	  = 0
+nDado2    = 0
+bDadosIguales = False
+vecesCarcel = 0
 nVeces    = 100000
 nCasillas = 40
 contador  = [0.]*nCasillas
@@ -24,10 +26,26 @@ print ("Tirando los dados " + str(nVeces) + " veces")
 for i in range(nVeces):
 
 	#Tirar dados
-	valorDados = rollTwoDice()
+	bDadosIguales = False
+	nDado1 = randint(1,6) 
+	nDado2 = randint(1,6)
+	
+	valorDados = nDado1 + nDado2
+
+	#Comprobar dados dobles
+	if nDado1 == nDado2:
+		bDadosIguales = True
+	
 	
 	#Mover posicion
-	posicionActual += valorDados
+	#Si se esta en la carcel, mover si dados dobles
+	if (bCarcel and bDadosIguales) or (not bCarcel) or (bCarcel and vecesCarcel>=3) : 
+		posicionActual += valorDados
+		bCarcel = False
+		bVecesCarcel = 0
+
+	if bCarcel and not bDadosIguales:
+		bVecesCarcel +=1
 
 	#Corregir posicion si se da la vuelta
 	if posicionActual >= nCasillas :
@@ -37,7 +55,8 @@ for i in range(nVeces):
 	#Si casilla "ir a carcel", cambiar posicion a carcel
 	if posicionActual == 30:
 		contador[posicionActual] += 1 
-		posicionActual = 10 
+		posicionActual = 10
+		bCarcel = True 
 	
 	else:
 		contador[posicionActual] += 1 
