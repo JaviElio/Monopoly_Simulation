@@ -39,8 +39,8 @@ for i in range(nVeces):
 	
 	#Mover posicion si:
 	#	Si se esta en la carcel, mover si dados dobles
-	#	Si no se está en la carcel
-	#	Si se está en la carcel y es la tercera tirada
+	#	Si no se esta en la carcel
+	#	Si se esta en la carcel y es la tercera tirada
 	if (bCarcel and bDadosIguales) or (not bCarcel) or (bCarcel and vecesCarcel>=3) : 
 		posicionActual += valorDados
 		bCarcel = False
